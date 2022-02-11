@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { store } = require ('../db/store');
-const { notes } = require('../db/db.json');
+// const { notes } = require('../db/db.json');
 
 
 // get existing notes
@@ -18,7 +18,7 @@ router.get('/notes', (req, res) => {
 // post note - needs to have body
 
 router.post('/notes', (req, res) => {
-    store.write()
+    store.writeNote()
     .then(notes => {
         res.json(notes)
     })
@@ -29,8 +29,8 @@ router.post('/notes', (req, res) => {
 
 // delete note
 
-router.delete('/notes', (req, res) => {
+// router.delete('/notes', (req, res) => {
 
-})
+// })
 
 module.exports = router;

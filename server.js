@@ -1,5 +1,7 @@
 // require express, fs, and path
 const express = require('express');
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 const fs = require('fs');
 const path = require('path');
 // set port to 3001
@@ -16,32 +18,16 @@ const notes = require('./db/db.json');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// instructs the server to make certain files readily available 
+// and to not gate it behind a server endpoint
 app.use(express.static('public'));
 
-// need to return notes.html
-app.get('/notes', (req, res) => { 
-    res.sendFile(path.join(__dirname, './public/notes.html'));
 
-});
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
-// need to return index.html
-app.get('*', (req, res) => {  
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
 
-app.get('/api/notes', (req, res) => { 
-    store.getNotes().then((notes) => {
-        return res.json(notes)
-    })
-});
 
-// app.post('/api/notes', (req, res) => {
-//     const notes = 
-// })
-
-// app.post('/api/notes', (req, res) => {  // found saveNote() in public/assets/js/index.js
-
-// }) 
 //should receive a new note to save on the request body, add it to the db.json file
 // and then return the new note to the client. 
 //You'll need to find a way to give each note a unique id when it's saved 
