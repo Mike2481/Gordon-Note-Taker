@@ -30,8 +30,15 @@ router.post("/notes", (req, res) => {
 
 // delete note
 
-// router.delete('/notes', (req, res) => {
-
-// })
+router.delete('/notes/:id', (req, res) => { // uses id to set endpoint for specific note
+    const id = req.params.id // defines id as the selected note id
+    store.deleteNotes(id) // passes data to the deleteNotes method from store.js
+    .then(() => {
+        res.json({ ok: true }); // sends status response as json
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    })
+})
 
 module.exports = router;
